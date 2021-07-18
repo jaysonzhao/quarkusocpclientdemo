@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bluegreen
+  namespace: testbg
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: bluegreen
+  namespace: testbg
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list"]
+  - apiGroups: ["build.openshift.io"]
+    resources: ["builds","buildconfigs","buildconfigs/instantiate"]
+    verbs: ["list","create","update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bluegreen
+  namespace: testbg
+roleRef:
+  kind: Role
+  name: bluegreen
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: bluegreen
+    namespace: testbg
