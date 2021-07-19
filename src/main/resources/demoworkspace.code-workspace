@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"name": "bluegreen",
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../../openshift-voting-app"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}

@@ -26,4 +26,12 @@ public class Results {
         .build());
         return build.getMetadata().getName();
     }
+
+    @GET
+    @Path("/{namespace}/{buildname}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getBuildStatus(@PathParam("namespace") String namespace, @PathParam("buildname") String bcname) {
+        Build build = openshiftClient.builds().inNamespace(namespace).withName(buildname);
+        return build.getStatus().toString();
+    }
 }
