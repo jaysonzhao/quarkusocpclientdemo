@@ -34,4 +34,20 @@ public class Results {
         
         return openshiftClient.builds().inNamespace(namespace).withName(buildname).get().getStatus().toString();
     }
+
+    @GET
+    @Path("/route/{namespace}/{routename}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String chageRoute(@PathParam("namespace") String namespace, @PathParam("routename") String routename) {
+        
+        try
+           {
+               openshiftClient.routes().inNamespace(namespace).withName(routename).patch("{\"spec\": {\"alternateBackends\": [{\"kind\": \"Service\",\"name\": \"new\",\"weight\": 0}], \"to\":{\"kind\": \"Service\",\"name\": \"new\",\"weight\": 100}}}\"");
+           }
+           catch(Exception e){
+               return "Fail";
+           }
+
+        return "Done";
+    }
 }
