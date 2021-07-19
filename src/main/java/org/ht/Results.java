@@ -30,8 +30,8 @@ public class Results {
     @GET
     @Path("/{namespace}/{buildname}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getBuildStatus(@PathParam("namespace") String namespace, @PathParam("buildname") String bcname) {
-        Build build = openshiftClient.builds().inNamespace(namespace).withName(buildname);
-        return build.getStatus().toString();
+    public String getBuildStatus(@PathParam("namespace") String namespace, @PathParam("buildname") String buildname) {
+        
+        return openshiftClient.builds().inNamespace(namespace).withName(buildname).get().getStatus().toString();
     }
 }
