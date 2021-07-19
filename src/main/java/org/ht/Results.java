@@ -36,15 +36,16 @@ public class Results {
     }
 
     @GET
-    @Path("/route/{namespace}/{routename}")
+    @Path("/route/{namespace}/{routename}/{svcname}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String chageRoute(@PathParam("namespace") String namespace, @PathParam("routename") String routename) {
+    public String chageRoute(@PathParam("namespace") String namespace, @PathParam("routename") String routename, @PathParam("svcname") String svcname) {
         
         try
            {
-               openshiftClient.routes().inNamespace(namespace).withName(routename).patch("{\"spec\": {\"alternateBackends\": [{\"kind\": \"Service\",\"name\": \"new\",\"weight\": 0}], \"to\":{\"kind\": \"Service\",\"name\": \"new\",\"weight\": 100}}}\"");
+               openshiftClient.routes().inNamespace(namespace).withName(routename).patch("{\"spec\": {\"alternateBackends\": [{\"kind\": \"Service\",\"name\": \"new\",\"weight\": 0}], \"to\":{\"kind\": \"Service\",\"name\": \""+svcname+"\",\"weight\": 100}}}\"");
            }
            catch(Exception e){
+               e.printStackTrace();
                return "Fail";
            }
 
