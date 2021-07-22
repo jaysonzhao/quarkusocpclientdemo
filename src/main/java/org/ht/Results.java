@@ -42,7 +42,8 @@ public class Results {
         
         try
            {
-               openshiftClient.routes().inNamespace(namespace).withName(routename).patch("{\"spec\": {\"alternateBackends\": [{\"kind\": \"Service\",\"name\": \"new\",\"weight\": 0}], \"to\":{\"kind\": \"Service\",\"name\": \""+svcname+"\",\"weight\": 100}}}\"");
+              String othername = svcname.equals("new") ? "old" : "new";
+              openshiftClient.routes().inNamespace(namespace).withName(routename).patch("{\"spec\": {\"alternateBackends\": [{\"kind\": \"Service\",\"name\": \""+othername+"\",\"weight\": 0}], \"to\":{\"kind\": \"Service\",\"name\": \""+svcname+"\",\"weight\": 100}}}\"");
            }
            catch(Exception e){
                e.printStackTrace();
