@@ -52,4 +52,22 @@ public class Results {
 
         return "Done";
     }
+
+    @GET
+    @Path("/route/{namespace}/{routename}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String iniRoute(@PathParam("namespace") String namespace, @PathParam("routename") String routename) {
+        
+        try
+           {
+              
+              openshiftClient.routes().inNamespace(namespace).withName(routename).patch("{\"spec\": {\"alternateBackends\": [{\"kind\": \"Service\",\"name\": \"new\",\"weight\": 50}], \"to\":{\"kind\": \"Service\",\"name\": \"old\",\"weight\": 50}}}\"");
+           }
+           catch(Exception e){
+               e.printStackTrace();
+               return "Fail";
+           }
+
+        return "Done";
+    }
 }
