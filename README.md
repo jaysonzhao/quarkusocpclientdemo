@@ -4,7 +4,7 @@ Test it on ocp：
 
 ```shell script
 oc new-project testbg
-oc apply -f src/resource/roles.yaml
+oc apply -f src/main/resource/roles.yaml
 
 ./mvnw clean package -Dquarkus.container-image.build=true
 
